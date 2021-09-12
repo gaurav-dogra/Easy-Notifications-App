@@ -1,0 +1,9 @@
+package com.gmail.gauru.dogra.easynotifications.repo;
+
+import com.gmail.gauru.dogra.easynotifications.model.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RoleRepo extends JpaRepository<Role, Long> {
+
+    Role findByName(String name);
+}
