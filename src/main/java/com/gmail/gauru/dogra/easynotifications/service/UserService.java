@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     User saveUser(User user);
     Role saveRole(Role role);
-    void saveRoleToUser(String email, String roleName);
-    User getUser(String email);
+    void saveRoleToUser(String userName, String roleName);
+    User getUser(String userName);
     List<User> getUsers(); // how to provide all users with pagination
 }
