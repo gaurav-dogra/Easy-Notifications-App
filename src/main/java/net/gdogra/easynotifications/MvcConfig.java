@@ -1,4 +1,4 @@
-package com.gmail.gauru.dogra.easynotifications;
+package net.gdogra.easynotifications;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
