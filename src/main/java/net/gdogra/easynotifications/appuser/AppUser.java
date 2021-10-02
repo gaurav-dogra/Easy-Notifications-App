@@ -1,9 +1,9 @@
 package net.gdogra.easynotifications.appuser;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,11 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 public class AppUser implements UserDetails {
 
@@ -33,9 +33,6 @@ public class AppUser implements UserDetails {
     )
     private Long id;
     private String email;
-//    private String mobileNumber;
-    private String firstName;
-    private String lastName;
     private String password;
 //    private AppUserRole appUserRole;
     private Boolean locked = false;
@@ -71,4 +68,17 @@ public class AppUser implements UserDetails {
         return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        AppUser appUser = (AppUser) o;
+
+        return Objects.equals(id, appUser.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 741337932;
+    }
 }
