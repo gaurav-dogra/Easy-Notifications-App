@@ -29,7 +29,7 @@ public class AppUser implements UserDetails {
             generator = "user_sequence"
     )
     private Long id;
-    private String username; // email as username
+    private String email; // email as username
     private String password;
 //    private AppUserRole appUserRole;
     private Boolean locked = false;
@@ -40,13 +40,17 @@ public class AppUser implements UserDetails {
         return Collections.emptyList();
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
     }
 
     @Override
@@ -76,11 +80,11 @@ public class AppUser implements UserDetails {
 
         AppUser appUser = (AppUser) o;
 
-        return username.equals(appUser.username);
+        return email.equals(appUser.email);
     }
 
     @Override
     public int hashCode() {
-        return username.hashCode();
+        return email.hashCode();
     }
 }
