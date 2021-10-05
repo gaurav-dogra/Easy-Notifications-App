@@ -1,6 +1,5 @@
 package net.gdogra.easynotifications.appuser;
 
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 
 @Entity
 @Setter
-@NoArgsConstructor
 public class AppUser implements UserDetails {
 
     @SequenceGenerator(
@@ -29,11 +29,27 @@ public class AppUser implements UserDetails {
             generator = "user_sequence"
     )
     private Long id;
+
+
+    @NotBlank(message = "email can not be left blank")
+    @Size(min=2, max=60, message="First name between 2 and 60 characters")
     private String email; // email as username
+
+    @NotBlank(message = "password can not be left blank")
+    @Size(min=6, max=20, message="password between 6 and 20 characters")
     private String password;
 //    private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
+
+    public AppUser(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public AppUser() {
+
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
