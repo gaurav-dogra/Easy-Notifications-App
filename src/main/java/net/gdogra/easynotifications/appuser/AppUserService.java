@@ -1,6 +1,7 @@
 package net.gdogra.easynotifications.appuser;
 
 import lombok.AllArgsConstructor;
+import net.gdogra.easynotifications.dtos.LoginDto;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,17 +25,16 @@ public class AppUserService implements UserDetailsService {
                         String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public void signUpUser(AppUser appUser) {
+    public void signUpUser(LoginDto dto) {
         boolean userExists = appUserRepo
-                .findByEmail(appUser.getEmail())
+                .findByEmail(dto.getEmail())
                 .isPresent();
 
         if (userExists) {
-            throw new IllegalStateException("email already taken");
+            throw new IllegalStateException("email already exist");
         }
 
-        String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
-        appUser.setPassword(encodedPassword);
-        appUserRepo.save(appUser);
+        String encodedPassword = bCryptPasswordEncoder.encode(dto.getPassword());
+        appUserRepo.save(new AppUser(dto.getEmail(), encodedPassword));
     }
 }
