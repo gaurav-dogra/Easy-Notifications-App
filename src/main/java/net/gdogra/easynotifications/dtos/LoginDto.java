@@ -1,4 +1,4 @@
-package net.gdogra.easynotifications.appuser;
+package net.gdogra.easynotifications.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
