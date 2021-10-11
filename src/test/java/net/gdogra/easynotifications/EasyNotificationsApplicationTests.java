@@ -1,4 +1,4 @@
-package com.gmail.gauru.dogra.easynotifications;
+package net.gdogra.easynotifications;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
