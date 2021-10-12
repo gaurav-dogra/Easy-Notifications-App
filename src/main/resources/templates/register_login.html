@@ -9,12 +9,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+    <!-- font awesome-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
+    <!--    local css file-->
     <link href="/static/css/register_login.css" rel="stylesheet" th:href="@{/css/register_login.css}">
+
+    <!--    use of intl-tel-input, a JavaScript plugin for entering and validating international telephone numbers-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
     <title>Easy Notifications App</title>
 </head>
+
 <body>
 <div class="container">
     <div class="row">
@@ -40,12 +48,15 @@
                         </div>
 
                         <div class="form-floating mb-3">
+                            <input type="tel" class="form-control" id="floatingInputPhone" placeholder="Mobile Number">
+                            <label for="floatingInputPhone"></label>
+                        </div>
+
+                        <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="floatingInputEmail"
                                    placeholder="name@example.com">
                             <label for="floatingInputEmail">Email address</label>
                         </div>
-
-                        <hr>
 
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
@@ -87,9 +98,36 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+<script>
+    function getIp(callback) {
+        fetch('https://ipinfo.io/json?token=f7ccda6c276306', { headers: { 'Accept': 'application/json' }})
+            .then((resp) => resp.json())
+            .catch(() => {
+                return {
+                    country: 'us',
+                };
+            })
+            .then((resp) => callback(resp.country));
+    }
+    const phoneInputField = document.querySelector("#floatingInputPhone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        initialCountry: "auto",
+        geoIpLookup: getIp,
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+    const info = document.querySelector(".alert-info");
 
+    function process(event) {
+        event.preventDefault();
+
+        const phoneNumber = phoneInput.getNumber();
+
+        info.style.display = "";
+        info.innerHTML = `Phone number in E.164 format: <strong>${phoneNumber}</strong>`;
+    }
+</script>
+
+<div class="alert alert-info" style="display: none;"></div>
 </body>
 </html>
