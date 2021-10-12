@@ -28,13 +28,16 @@ public class LoginController {
         return "register_login";
     }
 
-    @PostMapping(value = "/")
-    public String signupNewUser(@Valid @ModelAttribute("dto") LoginDto dto,
-                                BindingResult result) {
-        log.info("SIGNUP");
+    @PostMapping(value = "/register")
+    public String register(@Valid @ModelAttribute("registerDto") RegisterDto registerDto,
+                           BindingResult result) {
+        log.info("/REGISTER------------------------");
+        log.info(String.valueOf(registerDto));
         if (result.hasErrors()) {
+            log.info("errors found.......................");
             return "register_login";
         } else {
+            log.info("Returning Success...................");
             return "success";
         }
     }

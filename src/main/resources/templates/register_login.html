@@ -34,32 +34,32 @@
                 <div class="card-body p-4 p-sm-5">
                     <h5 class="card-title text-center mb-5 fw-light fs-5">Register</h5>
 
-                    <form>
+                    <form action="#" th:action="@{/register}" th:object="${registerDto}" method="post">
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputfirstName" placeholder="First Name"
+                            <input type="text" th:field="*{firstName}" class="form-control" id="floatingInputfirstName" placeholder="First Name"
                                    required autofocus>
                             <label for="floatingInputfirstName">First Name</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInputlastName" placeholder="Last Name">
+                            <input type="text" th:field="*{lastName}" class="form-control" id="floatingInputlastName" placeholder="Last Name">
                             <label for="floatingInputlastName">Last Name</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control" id="floatingInputPhone" placeholder="Mobile Number">
+                            <input type="tel" th:field="*{mobileNumber}" class="form-control" id="floatingInputPhone" placeholder="Mobile Number">
                             <label for="floatingInputPhone"></label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInputEmail"
+                            <input type="email" th:field="*{email}" class="form-control" id="floatingInputEmail"
                                    placeholder="name@example.com">
                             <label for="floatingInputEmail">Email address</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" th:field="*{password}" class="form-control" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
 
@@ -100,7 +100,7 @@
 
 <script>
     function getIp(callback) {
-        fetch('https://ipinfo.io/json?token=f7ccda6c276306', { headers: { 'Accept': 'application/json' }})
+        fetch('https://ipinfo.io/json?token=f7ccda6c276306', {headers: {'Accept': 'application/json'}})
             .then((resp) => resp.json())
             .catch(() => {
                 return {
@@ -109,6 +109,7 @@
             })
             .then((resp) => callback(resp.country));
     }
+
     const phoneInputField = document.querySelector("#floatingInputPhone");
     const phoneInput = window.intlTelInput(phoneInputField, {
         initialCountry: "auto",

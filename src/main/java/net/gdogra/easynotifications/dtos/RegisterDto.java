@@ -20,7 +20,7 @@ public class RegisterDto {
     private String lastName;
 
     @Size(max = 16, message = "Invalid phone number")
-    private String mobile;
+    private String mobileNumber;
 
     @NotBlank(message = "email can not be left blank")
     @Email(regexp = "^(.+)@(.+)$", message = "Invalid email address")
