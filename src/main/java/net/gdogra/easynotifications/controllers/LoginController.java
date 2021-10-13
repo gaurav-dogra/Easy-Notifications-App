@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
@@ -21,21 +22,21 @@ public class LoginController {
 
     private final AppUserService appUserService;
 
-    @GetMapping("/")
+    @GetMapping({"/", "/register"})
     public String home(Model model) {
         model.addAttribute("loginDto", new LoginDto());
         model.addAttribute("registerDto", new RegisterDto());
-        return "register_login";
+        return "register";
     }
 
     @PostMapping(value = "/register")
-    public String register(@Valid @ModelAttribute("registerDto") RegisterDto registerDto,
+    public String registerNewUser(@Valid @ModelAttribute("registerDto") RegisterDto registerDto,
                            BindingResult result) {
-        log.info("/REGISTER------------------------");
+        log.info("/registerDto validation------------------------");
         log.info(String.valueOf(registerDto));
         if (result.hasErrors()) {
             log.info("errors found.......................");
-            return "register_login";
+            return "register";
         } else {
             log.info("Returning Success...................");
             return "success";
